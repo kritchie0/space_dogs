@@ -4,6 +4,14 @@ import pygame
 print("bork bork...in space...")
 
 
+SCREEN_SIZE = [1280, 720]
+
+
+def setup():
+    pygame.init()
+
+
+
 def show(image):
     screen = pygame.display.get_surface()
     screen.fill((255, 255, 255))
