@@ -1,20 +1,43 @@
 import pygame
-from typing import Optional
-from enum import StrEnum
-
-class PlayerSprite(StrEnum):
-    up: str = "./Assets/Player_Up"
-    down: str = "./Assets/Player_Down"
-    left: str = "./Assets/Player_Left"
-    right: str = "./Assets/Player_Right"
 
 
-class Player(pygame.sprite.Sprite):
+ASSET_FILE_PATH = "./Assets"
+
+
+class LoadFramesPNG:
+    def __init__(self, filename_: str, tag_: str, frames_: int, filetype_: str):
+        self.frames = []
+        for i in range(frames_):
+            path: str = ASSET_FILE_PATH + "/" + filename_ + "_" + tag_ + "_" + str(i+1) + "." + filetype_
+            image: pygame.Surface = pygame.image.load(path).convert_alpha()
+            self.frames.append(image)
+
+
+class AnimationFrames:
+    def __init__(self, filename_: str):
+        self.idle = LoadFramesPNG(filename_=filename_, tag_="Down", frames_=1, filetype_="png")
+        self.down = LoadFramesPNG(filename_=filename_, tag_="Down", frames_=4, filetype_="png")
+        self.up = LoadFramesPNG(filename_=filename_, tag_="Up", frames_=4, filetype_="png")
+        self.left = LoadFramesPNG(filename_=filename_, tag_="Left", frames_=4, filetype_="png")
+        self.right = LoadFramesPNG(filename_=filename_, tag_="Right", frames_=4, filetype_="png")
+
+
+class PlayerImages(AnimationFrames):
     def __init__(self):
+        super().__init__("Player")
+
+
+class PlayerEntity(pygame.sprite.Sprite):
+    def __init__(self, images_: PlayerImages, position_):
         super().__init__()  # Initialize base class.
 
-        # Sprites
-        self.player_sprite = None
+        self.animation: PlayerImages = images_
+        self.frame: int = 0
+        self.current = self.animation.idle
+        self.image = self.current.frames[self.frame]
+        self.collision_box = self.image.get_rect(center=position_)
 
-    def load_sprites(self):
-        self.player_sprite = pygame.image.load("../Assets/Dog000.png").convert_alpha()
+    def Update(self, position_):
+        self.frame = (self.frame + 1) % len(self.current.frames)
+        self.collision_box = self.image.get_rect(center=position_)
+
