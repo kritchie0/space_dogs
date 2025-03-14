@@ -4,11 +4,14 @@ import pygame
 ASSET_FILE_PATH = "./Assets"
 
 
+
+
 class LoadFramesPNG:
     def __init__(self, filename_: str, tag_: str, frames_: int, filetype_: str):
         self.frames = []
         for i in range(frames_):
             path: str = ASSET_FILE_PATH + "/" + filename_ + "_" + tag_ + "_" + str(i+1) + "." + filetype_
+            print(path)
             image: pygame.Surface = pygame.image.load(path).convert_alpha()
             self.frames.append(image)
 
@@ -37,7 +40,13 @@ class PlayerEntity(pygame.sprite.Sprite):
         self.image = self.current.frames[self.frame]
         self.collision_box = self.image.get_rect(center=position_)
 
+    def _load(self):
+        ...
+
     def Update(self, position_):
         self.frame = (self.frame + 1) % len(self.current.frames)
         self.collision_box = self.image.get_rect(center=position_)
+
+        screen = pygame.display.get_surface()
+        screen.blit(self.image, position_)
 

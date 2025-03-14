@@ -9,9 +9,17 @@ SCREEN_SIZE = [SCREEN_WIDTH, SCREEN_HEIGHT]
 
 # Player
 PLAYER_SPRITE_PATH = "./Assets"
+PLAYER_DOWN_SPRITE = "./Assets/Player_Down_1.png"
 
 PLAYER_POS_INIT = [SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2]
 PLAYER_SPEED = 200
+
+
+def show(image, pos: pygame.Vector2):
+    screen = pygame.display.get_surface()
+    screen.fill((255, 255, 255))
+    screen.blit(image, (pos.x, pos.y))
+    pygame.display.flip()
 
 
 def space_dogs():
@@ -28,6 +36,10 @@ def space_dogs():
 
     PlayerImages = player.PlayerImages()
     Player = player.PlayerEntity(PlayerImages, PLAYER_POS_INIT)
+    player_pos.x = 0
+    player_pos.y = 0
+
+    image: pygame.Surface = pygame.image.load(PLAYER_DOWN_SPRITE).convert()
 
     # Quit game if user presses 'X' button on screen.
     while is_running is True:
@@ -38,7 +50,6 @@ def space_dogs():
         screen.fill("white")
 
         input_key =  pygame.key.get_pressed()
-
         if input_key[pygame.K_w]:
             player_pos.y -= 200 * dt
         if input_key[pygame.K_s]:
@@ -48,13 +59,10 @@ def space_dogs():
         if input_key[pygame.K_d]:
             player_pos.x += 200 * dt
 
-        Player.Update(player_pos)
-        Player.
-        pygame.display.flip()
-
+        # Player.Update(player_pos)
         # Limit fps to 60
         dt = clock.tick(60) / 1000
-
+        show(image, player_pos)
     pygame.quit()
 
 

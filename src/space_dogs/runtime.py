@@ -1,6 +1,10 @@
 import pygame
 
-class SpaceDogs(object):
-    def __init__(self):
-        self.screen: pygame.Surface =
 
+class ImageLoader(object):
+    EXTENSIONS: [int, str] = ['png', 'gif', 'jpg', 'jpeg', 'bmp']
+    TYPE = 'image'
+
+    @staticmethod
+    def _load(path):
+        return pygame.image.load(path).convert_alpha()
