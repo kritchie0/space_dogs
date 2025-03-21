@@ -4,6 +4,10 @@ import pygame
 ASSET_FILE_PATH = "./Assets"
 
 
+class SD_Sprite(object):
+    def __init__(self, path_: str):
+        self.sprites: str = path_
+        self.spriteUp: str = path_ + "_Up"
 
 
 class LoadFramesPNG:
