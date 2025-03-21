@@ -1,4 +1,7 @@
+import enum
+
 import pygame
+from enum import auto
 from dataclasses import dataclass
 
 
@@ -9,6 +12,13 @@ class Ext:
     bmp: str = 'bmp'
     jpg: str = 'jpg'
     jpeg: str = 'jpeg'
+
+@dataclass
+class Direction(auto):
+    Up: int = auto
+    Down: int = auto
+    Left: int = auto
+    Right: int = auto
 
 
 FILE_PATH_PLAYER_UP_1 = "./Assets/Player_Up_1.png"
@@ -58,4 +68,5 @@ class MuddyPlayer(MuddySprite):
     def __init__(self):
         super().__init__(PLAYER_UP_SPRITES, PLAYER_DOWN_SPRITES, PLAYER_RIGHT_SPRITES, PLAYER_LEFT_SPRITES)
         self.currentFrame: int = 0
+        self.currentDirection: Direction = Direction.Down
 
