@@ -1,6 +1,6 @@
 import sys
 import pygame
-
+from dataclasses import dataclass
 from src.sprites import player
 from src.muddy_paws import MuddyPlayer
 
@@ -8,13 +8,16 @@ SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 SCREEN_SIZE = [SCREEN_WIDTH, SCREEN_HEIGHT]
 
-# Player
-PLAYER_SPRITE_PATH = "./Assets"
-PLAYER_DOWN_SPRITE = "./Assets/Player_Down_1.png"
-PLAYER_UP_SPRITE = "./Assets/Player_Up_1.png"
 
 PLAYER_POS_INIT = [SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2]
 PLAYER_SPEED = 200
+
+
+class GameState:
+    def __init__(self, position_):
+        self.Direction = None
+        self.Position = position_
+
 
 
 def show(image, pos: pygame.Vector2,):

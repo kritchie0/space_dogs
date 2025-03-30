@@ -4,7 +4,7 @@ from enum import StrEnum
 
 EXTENSIONS: [int, str] = ['png', 'gif', 'jpg', 'jpeg', 'bmp']
 
-FILE_PATH_ROOT = "./"
+FILE_PATH_ROOT = "space_dogs/"
 FILE_PATH_ASSETS = "Assets/"
 
 FILE_PATH_PLAYER_UP = "Player_Up/"
