@@ -1,55 +1,66 @@
 import pygame
+from pygame import Surface
+from dataclasses import dataclass
 
 import assets
 import globals
 
-from enums import Inputs, Directions
+from enums import Directions
 
 
 class Player:
-    def __init__(self, filepath_assets_):
-        self.assets = assets.loadAssets(filepath_assets_)
+    def __init__(self, filepath_assets):
+        self.assets = assets.loadAssets(filepath_assets)
         self.frame = 0
         self.sprite = None
         self.direction = None
         self.position = globals.PLAYER_STARTING_POSITION
+        self.FPSLimiter = None
 
-    def Update(self, player_input_):
-        player_input = player_input_
-        self.__handleDirection(player_input[Inputs.Keyboard])
+    def Update(self, clock: pygame.Clock):
+        self.FPSLimiter = clock.tick(globals.MAX_FPS) / 1000
+        self.__handlePosition()
+        self.__handleAnimation()
 
 
-    def __handleDirection(self, input_keyboard_):
-        input_keyboard = input_keyboard_
+    def __handlePosition(self):
+        input_keyboard = pygame.key.get_pressed()
 
-        if input_keyboard == pygame.K_w: self.direction = "up"
-        if input_keyboard == pygame.K_s: self.direction = "down"
-        if input_keyboard == pygame.K_a: self.direction = "left"
-        if input_keyboard == pygame.K_d: self.direction = "right"
-        else: self.direction = "idle"
+        if self.direction != input_keyboard:
+            self.frame = 0
+
+        if input_keyboard == pygame.K_w: self.direction = Directions.Up
+        elif input_keyboard == pygame.K_s: self.direction = Directions.Down
+        elif input_keyboard == pygame.K_a: self.direction = Directions.Left
+        elif input_keyboard == pygame.K_d: self.direction = Directions.Right
+        else: self.direction = Directions.Idle
+
 
     def __handleAnimation(self):
         if self.direction == Directions.Up:
             print("Direction: Up")
             self.frame = (self.frame + 1) % globals.MAX_ANIMATION_FRAMES
-            self.sprite = globals.FRAME_OFFSET_UP + self.frame
+            self.sprite = self.assets[self.direction][self.frame]
 
         elif self.direction == Directions.Down:
             print("Direction: Down")
             self.frame = (self.frame + 1) % globals.MAX_ANIMATION_FRAMES
-            self.sprite = self.down[self.frame]
+            self.sprite = self.assets[self.direction][self.frame]
 
         elif self.direction == Directions.Left:
             print("Direction: Left")
             self.frame = (self.frame + 1) % globals.MAX_ANIMATION_FRAMES
-            self.sprite = self.left[self.frame]
+            self.sprite = self.assets[self.direction][self.frame]
 
         elif self.direction == Directions.Right:
             print("Direction: Right")
             self.frame = (self.frame + 1) % globals.MAX_ANIMATION_FRAMES
-            self.sprite = self.right[self.frame]
+            self.sprite = self.assets[self.direction][self.frame]
 
         elif self.direction == Directions.Idle:
             print("Direction: Idle")
             self.frame = (self.frame + 1) % globals.MAX_ANIMATION_FRAMES
-            self.sprite = self.idle[self.frame]
+            self.sprite = self.assets[self.direction][self.frame]
+
+        def __handlePosition(self):
+            ...

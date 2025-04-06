@@ -2,7 +2,9 @@ import sys
 import pygame
 from dataclasses import dataclass
 from src.sprites import player
-from src.muddy_paws import MuddyPlayer
+# from src.muddy_paws import MuddyPlayer
+import src.assets
+from src.player import Player
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -42,8 +44,7 @@ def space_dogs():
     dt: float = 0
 
     DogPosition = pygame.Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
-    SpaceDog = MuddyPlayer()
-    Frame = SpaceDog.down[0]
+    SpaceDog = Player(src.assets.PATHS_PLAYER)
 
     # PlayerImages = player.PlayerImages()
     # Player = player.PlayerEntity(PlayerImages, PLAYER_POS_INIT)
@@ -61,27 +62,26 @@ def space_dogs():
                 is_running = False
 
         screen.fill("white")
-
-        input_key =  pygame.key.get_pressed()
-        if input_key[pygame.K_w]:
-            DogPosition.y -= 200 * dt
-            SpaceDog.currentFrame += 1 % 4
-            Frame = SpaceDog.up[SpaceDog.currentFrame]
-
-        if input_key[pygame.K_s]:
-            DogPosition.y += 200 * dt
-            SpaceDog.currentFrame += 1 % 4
-            Frame = SpaceDog.down[SpaceDog.currentFrame]
-
-        if input_key[pygame.K_a]:
-            DogPosition.x -= 200 * dt
-            SpaceDog.currentFrame += 1 % 4
-            Frame = SpaceDog.left[SpaceDog.currentFrame]
-
-        if input_key[pygame.K_d]:
-            DogPosition.x += 200 * dt
-            SpaceDog.currentFrame += 1 % 4
-            Frame = SpaceDog.right[SpaceDog.currentFrame]
+        SpaceDog.Update()
+        # if input_key[pygame.K_w]:
+        #     DogPosition.y -= 200 * dt
+        #     SpaceDog.currentFrame += 1 % 4
+        #     Frame = SpaceDog.up[SpaceDog.currentFrame]
+        #
+        # if input_key[pygame.K_s]:
+        #     DogPosition.y += 200 * dt
+        #     SpaceDog.currentFrame += 1 % 4
+        #     Frame = SpaceDog.down[SpaceDog.currentFrame]
+        #
+        # if input_key[pygame.K_a]:
+        #     DogPosition.x -= 200 * dt
+        #     SpaceDog.currentFrame += 1 % 4
+        #     Frame = SpaceDog.left[SpaceDog.currentFrame]
+        #
+        # if input_key[pygame.K_d]:
+        #     DogPosition.x += 200 * dt
+        #     SpaceDog.currentFrame += 1 % 4
+        #     Frame = SpaceDog.right[SpaceDog.currentFrame]
 
         # Player.Update(player_pos)
         # Limit fps to 60

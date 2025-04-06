@@ -6,6 +6,7 @@ def loadAssets(files_):
     assets = []
 
     for i in range(len(assets)):
+        assets.append([])
         image = pygame.image.load(files[i]).convert_alpha()
         assets.append(image)
 
@@ -41,3 +42,5 @@ PLAYER_RIGHT_SPRITES = [FILE_PATH_PLAYER_RIGHT_1, FILE_PATH_PLAYER_RIGHT_2, FILE
 
 FILE_PATH_PLAYER_IDLE_1 = "./Assets/Player_Idle_1.png"
 PLAYER_IDLE_SPRITES = [FILE_PATH_PLAYER_IDLE_1, FILE_PATH_PLAYER_IDLE_1, FILE_PATH_PLAYER_IDLE_1, FILE_PATH_PLAYER_IDLE_1]
+
+PATHS_PLAYER = [PLAYER_UP_SPRITES, PLAYER_DOWN_SPRITES, PLAYER_LEFT_SPRITES, PLAYER_RIGHT_SPRITES, PLAYER_IDLE_SPRITES]
