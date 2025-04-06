@@ -1,14 +1,15 @@
 import pygame
 
 
-def loadAssets(files_):
-    files = files_
+def loadAssets(files):
     assets = []
 
-    for i in range(len(assets)):
+    for i in range(len(files)):
         assets.append([])
-        image = pygame.image.load(files[i]).convert_alpha()
-        assets.append(image)
+
+        for n in range(len(files[0])):
+            image = pygame.image.load(files[i][n]).convert_alpha()
+            assets[i].append(image)
 
     return assets
 

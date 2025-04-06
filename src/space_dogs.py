@@ -1,13 +1,13 @@
 import sys
 import pygame
 from dataclasses import dataclass
-from src.sprites import player
+# from src.sprites import player
 # from src.muddy_paws import MuddyPlayer
-import src.assets
-from src.player import Player
+import assets
+from player import Player
 
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 430
+SCREEN_HEIGHT = 430
 SCREEN_SIZE = [SCREEN_WIDTH, SCREEN_HEIGHT]
 
 
@@ -44,7 +44,7 @@ def space_dogs():
     dt: float = 0
 
     DogPosition = pygame.Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
-    SpaceDog = Player(src.assets.PATHS_PLAYER)
+    SpaceDog = Player(assets.PATHS_PLAYER)
 
     # PlayerImages = player.PlayerImages()
     # Player = player.PlayerEntity(PlayerImages, PLAYER_POS_INIT)
@@ -62,7 +62,15 @@ def space_dogs():
                 is_running = False
 
         screen.fill("white")
-        SpaceDog.Update()
+        FPSLimiter = clock.tick(60) / 1000
+
+        SpaceDog.Update(FPSLimiter)
+
+        # Player Render
+        surface = pygame.display.get_surface()
+        surface.fill((255, 255, 255))
+        surface.blit(SpaceDog.sprite, (SpaceDog.position_x, SpaceDog.position_y))
+        pygame.display.flip()
         # if input_key[pygame.K_w]:
         #     DogPosition.y -= 200 * dt
         #     SpaceDog.currentFrame += 1 % 4
@@ -85,8 +93,8 @@ def space_dogs():
 
         # Player.Update(player_pos)
         # Limit fps to 60
-        dt = clock.tick(60) / 1000
-        show(Frame, DogPosition)
+        # dt = clock.tick(60) / 1000
+        # show(Frame, DogPosition)
 
     pygame.quit()
 
