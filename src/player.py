@@ -8,7 +8,6 @@ from assets import PATHS_PLAYER
 from enums import Directions
 
 
-
 BaseSpeed: int = 160
 
 
@@ -18,16 +17,15 @@ class Player(runtime.Sprite):
         self.position = pygame.Vector2(0, 0)
         self.FPSLimit = None
 
-    def Update(self, fps_limit):
+    def update(self, fps_limit):
         self.FPSLimit = fps_limit
 
         self._update_sprite()
-        self.__handlePosition()
-        # self.__handleAnimation()
+        self._get_position()
         self._render(self.position)
 
 
-    def __handlePosition(self):
+    def _get_position(self):
         input_keyboard = pygame.key.get_pressed()
 
         if input_keyboard[pygame.K_w]:
