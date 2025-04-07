@@ -1,25 +1,35 @@
 import pygame
-from enum import StrEnum
+from dataclasses import dataclass
+
+from globals import MAX_FPS
+
+class Sprite:
+    def __init__(self, paths_):
+        self.images = load_image(paths_)
+        self.frame: int = 0
+        self.direction = 0
+        self.image: pygame.Surface
 
 
-EXTENSIONS: [int, str] = ['png', 'gif', 'jpg', 'jpeg', 'bmp']
-
-FILE_PATH_ROOT = "space_dogs/"
-FILE_PATH_ASSETS = "Assets/"
-
-FILE_PATH_PLAYER_UP = "Player_Up/"
-FILE_PATH_PLAYER_DOWN = "Player_Down/"
-FILE_PATH_PLAYER_LEFT = "Player_Left/"
-FILE_PATH_PLAYER_RIGHT = "Player_Right/"
+    def _update_sprite(self):
+        self.frame = (self.frame + 1) % 4
+        self.image = self.images[self.direction][self.frame]
 
 
-def loadImage(file_: str, ext_: str):
-    Path: str = FILE_PATH_ROOT + FILE_PATH_ASSETS + file_ + ext_
-    return pygame.image.load(path_).convert_alpha()
+    def _render(self, position_):
+        surface = pygame.display.get_surface()
+        surface.fill((255, 255, 255))
+        surface.blit(self.image, position_)
+        pygame.display.flip()
 
-class ImageLoader(object):
-    TYPE = 'image'
+def load_image(file_: [str]):
+    images = []
 
-    @staticmethod
-    def _load(path):
-        return pygame.image.load(path).convert_alpha()
+    for i in range(len(file_)):
+        images.append([])
+
+        for n in range(len(file_[0])):
+            image = pygame.image.load(file_[i][n]).convert_alpha()
+            images[i].append(image)
+
+    return images
