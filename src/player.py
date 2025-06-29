@@ -3,7 +3,7 @@ from pygame import Surface
 from dataclasses import dataclass
 
 import globals
-import runtime
+from runtime import load_image
 from assets import PATHS_PLAYER
 from enums import Directions
 
@@ -11,18 +11,32 @@ from enums import Directions
 BaseSpeed: int = 160
 
 
-class Player(runtime.Sprite):
+class Player:
     def __init__(self):
-        runtime.Sprite.__init__(self, PATHS_PLAYER)
+        self.images = load_image(PATHS_PLAYER)
         self.position = pygame.Vector2(0, 0)
         self.FPSLimit = None
+        self.image_scale = 2
+
+        self.frame: int = 0
+        self.direction = 0
+        self.image: pygame.Surface = self.images[Directions.Idle][self.frame]
+        self.surface = pygame.display.get_surface()
 
     def update(self, fps_limit):
         self.FPSLimit = fps_limit
-
-        self._update_sprite()
         self._get_position()
-        self._render(self.position)
+
+        # Update sprite.
+        self.frame = (self.frame + 1) % 4
+        self.image = self.images[self.direction][self.frame]
+        self.image = pygame.transform.scale_by(self.image, self.image_scale)
+
+        # Render updates.
+        # surface = pygame.display.get_surface()
+        # surface.fill((255, 255, 255))
+        self.surface.blit(self.image, self.position)
+        pygame.display.flip()
 
 
     def _get_position(self):
@@ -44,4 +58,7 @@ class Player(runtime.Sprite):
             self.direction = Directions.Right
             self.position.x += BaseSpeed * self.FPSLimit
 
-        else: self.direction = Directions.Idle
+        else:
+            self.direction = Directions.Idle
+            self.frame = 0
+

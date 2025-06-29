@@ -1,7 +1,4 @@
 import pygame
-from dataclasses import dataclass
-
-from globals import MAX_FPS
 
 class Sprite:
     def __init__(self, paths_):
@@ -9,16 +6,16 @@ class Sprite:
         self.frame: int = 0
         self.direction = 0
         self.image: pygame.Surface
-
+        self.image_scale: int = 0
 
     def _update_sprite(self):
         self.frame = (self.frame + 1) % 4
         self.image = self.images[self.direction][self.frame]
-
+        self.image = pygame.transform.scale_by(self.image, self.image_scale)
 
     def _render(self, position_):
         surface = pygame.display.get_surface()
-        surface.fill((255, 255, 255))
+        # surface.fill((255, 255, 255))
         surface.blit(self.image, position_)
         pygame.display.flip()
 
