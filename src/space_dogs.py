@@ -47,7 +47,6 @@ def load_spaceDogs():
         place_dog([0,0])
 
 def sd_runtime():
-
     place_dog([250, 250])
 
 

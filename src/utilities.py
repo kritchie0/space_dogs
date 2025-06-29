@@ -2,14 +2,22 @@
 # - Utilities - #
 # ------------- #
 import os
-from os import rename
-import pygame
+from pygame import Surface
+from pygame import image
 
-def rename_file(path_to_old_file: str, path_to_new_file):
-    os.rename(path_to_old_file, path_to_new_file)
+from loguru import logger
 
-def load_image(fp_):
-    return pygame.image.load(fp_).convert_alpha()
+def rename_file(path_to_src: str, path_to_dst: str):
+    logger.debug(f"Renaming: {path_to_src} to {path_to_dst}")
+    os.rename(src=path_to_src, dst=path_to_dst)
+
+def replace_file(path_to_src: str, path_to_dst: str):
+    logger.debug(f"Replacing: {path_to_src} to {path_to_dst}")
+    os.replace(src=path_to_src, dst=path_to_dst)
+
+def load_png(path_to_file: str) -> Surface:
+    return image.load(path_to_file).convert_alpha()
+
 
 def load_images(file_: [str]):
     images = []
@@ -18,7 +26,7 @@ def load_images(file_: [str]):
         images.append([])
 
         for n in range(len(file_[0])):
-            image = pygame.image.load(file_[i][n]).convert_alpha()
+            image = image.load(file_[i][n]).convert_alpha()
             images[i].append(image)
 
     return images
