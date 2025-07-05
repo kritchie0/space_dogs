@@ -1,2 +1,2 @@
 #--- config.py ---#
-Path_To_Player: str = '../player/'
+PATH_TO_PLAYER: str = r'Users/eringreenwood/Developer/space_dogs/player'

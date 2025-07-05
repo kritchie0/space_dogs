@@ -4,7 +4,18 @@ import pygame
     Constants
 """
 MAX_FPS = 60
+
+MAX_IDLE_FRAMES = 4
+MAX_WALKING_FRAMES = 4
+MAX_RUNNING_FRAMES = 3
+
 MAX_ANIMATION_FRAMES = 4
+FRAME_TYPES = [
+    ['idle_down'],
+    ['walking_up', 'walking_down', 'walking_left', 'walking_right'],
+    ['running_up', 'running_down', 'running_left', 'running_right']
+]
+
 MAX_FPS_ANIMATION_COUNTS = MAX_FPS / MAX_ANIMATION_FRAMES
 
 FRAME_OFFSET_UP = MAX_ANIMATION_FRAMES * 0

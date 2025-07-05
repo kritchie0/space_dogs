@@ -4,7 +4,6 @@ from dataclasses import dataclass
 # from src.sprites import player
 # from src.muddy_paws import MuddyPlayer
 import globals
-import assets
 from utilities import place_dog
 from player import Player
 

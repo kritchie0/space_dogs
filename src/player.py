@@ -1,9 +1,13 @@
 import pygame
+from numpy.matlib import zeros
+from pygame import image
 from pygame import Surface
 from dataclasses import dataclass
+import numpy as np
+from loguru import logger
 
 import globals
-import config
+from config import PATH_TO_PLAYER
 from runtime import load_image
 from enums import Directions
 
@@ -12,8 +16,10 @@ BaseSpeed: int = 160
 
 class Player:
     def __init__(self, path_to_player: str):
-        self.path_to_player: str = path_to_player
+        self.path_to_player: str = PATH_TO_PLAYER
         self.path_to_movement: str = self.path_to_player + "/movement"
+        self.frames: np.ndarray = np.zeros((globals.MAX_ANIMATION_FRAMES, len(globals.FRAME_TYPES)))
+
         # self.movement_sprites = 1
         # self.images = load_image(PATHS_PLAYER)
         # self.position = pygame.Vector2(0, 0)
@@ -26,44 +32,16 @@ class Player:
         # self.surface = pygame.display.get_surface()
 
     def load_sprites(self, sprite_type: str):
-        if sprite_type == 'movement':
-            Movements = ['idle', 'walk', 'run']
-            Directions = ['up', 'down', 'left', 'right']
+        # Movement Sprites
+        for index, frame_type in enumerate(globals.FRAME_TYPES):
+            for n in range(len(frame_type)):
+                path_to_sprite: str = f'{self.path_to_player}/movement/{frame_type[n]}_{n+1}'
+                logger.debug(path_to_sprite)
 
-            for movement in Movements:
-                frame_index: int = 0
-                path_to_sprite: str = f"{self.path_to_player}/{movement}"
-
-                if movement == 'idle':
-                    for i in range(2):
-                        print(f"file={movement}/{movement}_frame_{frame_index + 1}")
-
-
-                for direction in Directions:
-                    if (movement == 'idle'):
-
-                        print(f"file={movement}/{movement}_frame_{frame_index + 1}")
-                    else:
-                        print(f"file={movement}/{direction}_frame_{frame_index + 1}")
-                    frame_index += 1
-                # sprites: list = list()
-                # path_to_sprites = []
-
-        elif sprite_type == 'combat':
-            ...
-        else:
-            return
-
-    # images = []
-    #
-    # for i in range(len(file_)):
-    #     images.append([])
-    #
-    #     for n in range(len(file_[0])):
-    #         image = image.load(file_[i][n]).convert_alpha()
-    #         images[i].append(image)
-    #
-    # return images
+                try:
+                    self.frames[index, n] = image.load(path_to_sprite)
+                finally:
+                    logger.error(f"Path does not exist: {path_to_sprite}")
 
     # def update(self, fps_limit):
     #     self.FPSLimit = fps_limit
