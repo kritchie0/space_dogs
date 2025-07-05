@@ -1,4 +1,4 @@
-import pygame
+from enums import IntEnum
 
 """
     Constants
@@ -10,11 +10,17 @@ MAX_WALKING_FRAMES = 4
 MAX_RUNNING_FRAMES = 3
 
 MAX_ANIMATION_FRAMES = 4
+
 FRAME_TYPES = [
     ['idle_down'],
     ['walking_up', 'walking_down', 'walking_left', 'walking_right'],
     ['running_up', 'running_down', 'running_left', 'running_right']
 ]
+
+class FrameTypesEnum(IntEnum):
+    Idle    = 0
+    Walking = 1
+    Running = 2
 
 MAX_FPS_ANIMATION_COUNTS = MAX_FPS / MAX_ANIMATION_FRAMES
 

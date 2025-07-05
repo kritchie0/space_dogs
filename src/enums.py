@@ -1,10 +1,7 @@
 from enum import IntEnum
 
 
-class FrameTypes(IntEnum):
-    Idle = 0,
-    Walking = 1,
-    Running = 2
+
 
 class Directions(IntEnum):
     Up = 0,
