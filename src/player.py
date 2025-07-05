@@ -5,7 +5,6 @@ from dataclasses import dataclass
 import globals
 import config
 from runtime import load_image
-from assets import PATHS_PLAYER
 from enums import Directions
 
 
@@ -14,6 +13,7 @@ BaseSpeed: int = 160
 class Player:
     def __init__(self, path_to_player: str):
         self.path_to_player: str = path_to_player
+        self.path_to_movement: str = self.path_to_player + "/movement"
         # self.movement_sprites = 1
         # self.images = load_image(PATHS_PLAYER)
         # self.position = pygame.Vector2(0, 0)
